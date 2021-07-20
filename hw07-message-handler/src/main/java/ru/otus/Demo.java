@@ -1,8 +1,7 @@
 package ru.otus;
 
 import ru.otus.handler.ComplexProcessor;
-import ru.otus.listener.ListenerPrinterConsole;
-import ru.otus.model.Message;
+import ru.otus.listener.ListenerPrinter;
 import ru.otus.processor.LoggerProcessor;
 import ru.otus.processor.ProcessorConcatFields;
 import ru.otus.processor.ProcessorUpperField10;
@@ -14,11 +13,11 @@ public class Demo {
         var processors = List.of(new ProcessorConcatFields(),
                 new LoggerProcessor(new ProcessorUpperField10()));
 
-        var complexProcessor = new ComplexProcessor(processors, ex -> {});
-        var listenerPrinter = new ListenerPrinterConsole();
+        var complexProcessor = new ComplexProcessor(processors, (ex) -> {});
+        var listenerPrinter = new ListenerPrinter();
         complexProcessor.addListener(listenerPrinter);
 
-        var message = new Message.Builder(1L)
+        var message = new Message.Builder()
                 .field1("field1")
                 .field2("field2")
                 .field3("field3")

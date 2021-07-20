@@ -1,6 +1,6 @@
 package ru.otus.handler;
 
-import ru.otus.model.Message;
+import ru.otus.Message;
 import ru.otus.listener.Listener;
 import ru.otus.processor.Processor;
 
@@ -29,7 +29,7 @@ public class ComplexProcessor implements Handler {
                 errorHandler.accept(ex);
             }
         }
-        notify(newMsg);
+        notify(msg, newMsg);
         return newMsg;
     }
 
@@ -43,10 +43,10 @@ public class ComplexProcessor implements Handler {
         listeners.remove(listener);
     }
 
-    private void notify(Message msg) {
+    private void notify(Message oldMsg, Message newMsg) {
         listeners.forEach(listener -> {
             try {
-                listener.onUpdated(msg);
+                listener.onUpdated(oldMsg, newMsg);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

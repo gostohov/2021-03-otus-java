@@ -1,9 +1,8 @@
 package ru.otus.processor;
 
-import ru.otus.model.Message;
+import ru.otus.Message;
 
 public class LoggerProcessor implements Processor {
-
 
     private final Processor processor;
 
