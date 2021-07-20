@@ -1,6 +1,6 @@
-package ru.otus.listener;
+package ru.gostohov.listener;
 
-import ru.otus.Message;
+import ru.gostohov.Message;
 
 public class Record {
 

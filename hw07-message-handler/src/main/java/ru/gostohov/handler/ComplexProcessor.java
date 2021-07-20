@@ -1,8 +1,8 @@
-package ru.otus.handler;
+package ru.gostohov.handler;
 
-import ru.otus.Message;
-import ru.otus.listener.Listener;
-import ru.otus.processor.Processor;
+import ru.gostohov.Message;
+import ru.gostohov.listener.Listener;
+import ru.gostohov.processor.Processor;
 
 import java.util.ArrayList;
 import java.util.List;

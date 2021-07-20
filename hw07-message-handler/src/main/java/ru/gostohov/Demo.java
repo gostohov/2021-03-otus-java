@@ -1,10 +1,10 @@
-package ru.otus;
+package ru.gostohov;
 
-import ru.otus.handler.ComplexProcessor;
-import ru.otus.listener.ListenerPrinter;
-import ru.otus.processor.LoggerProcessor;
-import ru.otus.processor.ProcessorConcatFields;
-import ru.otus.processor.ProcessorUpperField10;
+import ru.gostohov.handler.ComplexProcessor;
+import ru.gostohov.listener.ListenerPrinter;
+import ru.gostohov.processor.LoggerProcessor;
+import ru.gostohov.processor.ProcessorConcatFields;
+import ru.gostohov.processor.ProcessorUpperField10;
 
 import java.util.List;
 

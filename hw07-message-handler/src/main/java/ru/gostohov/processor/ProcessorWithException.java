@@ -1,7 +1,7 @@
-package ru.otus.processor;
+package ru.gostohov.processor;
 
-import ru.otus.Message;
-import ru.otus.processor.exceptions.TimeSecondsException;
+import ru.gostohov.Message;
+import ru.gostohov.processor.exceptions.TimeSecondsException;
 
 import java.time.LocalDateTime;
 import java.util.function.Supplier;

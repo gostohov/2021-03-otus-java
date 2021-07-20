@@ -1,7 +1,7 @@
-package ru.otus.handler;
+package ru.gostohov.handler;
 
-import ru.otus.Message;
-import ru.otus.listener.Listener;
+import ru.gostohov.Message;
+import ru.gostohov.listener.Listener;
 
 public interface Handler {
     Message handle(Message msg);

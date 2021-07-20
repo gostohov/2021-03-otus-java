@@ -1,4 +1,4 @@
-package ru.otus;
+package ru.gostohov;
 
 import java.util.Objects;
 

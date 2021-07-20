@@ -1,13 +1,13 @@
-package ru.otus.handler;
+package ru.gostohov.handler;
 
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.otus.Message;
-import ru.otus.listener.Listener;
-import ru.otus.processor.Processor;
-import ru.otus.processor.ProcessorWithException;
-import ru.otus.processor.exceptions.TimeSecondsException;
+import ru.gostohov.Message;
+import ru.gostohov.listener.Listener;
+import ru.gostohov.processor.Processor;
+import ru.gostohov.processor.ProcessorWithException;
+import ru.gostohov.processor.exceptions.TimeSecondsException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

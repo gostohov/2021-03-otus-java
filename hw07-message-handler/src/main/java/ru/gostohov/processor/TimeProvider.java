@@ -1,4 +1,4 @@
-package ru.otus.processor;
+package ru.gostohov.processor;
 
 import java.time.LocalDateTime;
 import java.util.function.Supplier;

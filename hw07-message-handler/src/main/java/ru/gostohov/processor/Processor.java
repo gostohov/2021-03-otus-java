@@ -1,6 +1,6 @@
-package ru.otus.processor;
+package ru.gostohov.processor;
 
-import ru.otus.Message;
+import ru.gostohov.Message;
 
 public interface Processor {
 

@@ -1,4 +1,4 @@
-package ru.otus.processor.exceptions;
+package ru.gostohov.processor.exceptions;
 
 public class TimeSecondsException extends RuntimeException {
 

@@ -1,13 +1,13 @@
-package ru.otus;
+package ru.gostohov;
 
-import ru.otus.handler.ComplexProcessor;
-import ru.otus.listener.Logbook;
-import ru.otus.listener.ListenerLogbook;
-import ru.otus.listener.Record;
-import ru.otus.processor.Processor;
-import ru.otus.processor.ProcessorSwapFields11And13;
-import ru.otus.processor.ProcessorWithException;
-import ru.otus.processor.exceptions.TimeSecondsException;
+import ru.gostohov.handler.ComplexProcessor;
+import ru.gostohov.listener.Logbook;
+import ru.gostohov.listener.ListenerLogbook;
+import ru.gostohov.listener.Record;
+import ru.gostohov.processor.Processor;
+import ru.gostohov.processor.ProcessorSwapFields11And13;
+import ru.gostohov.processor.ProcessorWithException;
+import ru.gostohov.processor.exceptions.TimeSecondsException;
 
 import java.time.LocalDateTime;
 import java.util.List;
