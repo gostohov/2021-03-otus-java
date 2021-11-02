@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 class ComplexProcessorTest {
 
     @Test
-    @DisplayName("Тестируем вызовы процессоров")
+    @DisplayName("Processors call")
     void handleProcessorsTest() {
         //given
         var message = new Message.Builder(1L).field7("field7").build();
@@ -48,7 +48,7 @@ class ComplexProcessorTest {
     }
 
     @Test
-    @DisplayName("Тестируем обработку исключения")
+    @DisplayName("Exception handling")
     void handleExceptionTest() {
         //given
         var message = new Message.Builder(1L).field8("field8").build();
@@ -74,7 +74,7 @@ class ComplexProcessorTest {
     }
 
     @Test
-    @DisplayName("Тестируем уведомления")
+    @DisplayName("Notification testing")
     void notifyTest() {
         //given
         var message = new Message.Builder(1L).field9("field9").build();
