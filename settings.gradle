@@ -14,5 +14,6 @@ include 'hw03-reflection'
 include 'hw04-gc'
 include 'hw05-autolog'
 include 'hw06-atm'
+include 'hw08-serialization'
 include 'hw09-jdbc'
 
