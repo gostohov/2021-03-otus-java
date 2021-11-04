@@ -1,5 +1,7 @@
 package ru.otus.crm.service;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.core.repository.DataTemplate;
@@ -14,10 +16,12 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     private final DataTemplate<Client> clientDataTemplate;
     private final TransactionManager transactionManager;
+    private final SessionFactory sessionFactory;
 
-    public DbServiceClientImpl(TransactionManager transactionManager, DataTemplate<Client> clientDataTemplate) {
+    public DbServiceClientImpl(TransactionManager transactionManager, DataTemplate<Client> clientDataTemplate, SessionFactory sessionFactory) {
         this.transactionManager = transactionManager;
         this.clientDataTemplate = clientDataTemplate;
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -37,11 +41,14 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     @Override
     public Optional<Client> getClient(long id) {
-        return transactionManager.doInTransaction(session -> {
-            var clientOptional = clientDataTemplate.findById(session, id);
-            log.info("client: {}", clientOptional);
-            return clientOptional;
-        });
+        try (var session = sessionFactory.openSession()) {
+            try {
+                return Optional.ofNullable(session.find(Client.class, id));
+            } catch (Exception ex) {
+                log.error(ex.getMessage(), ex);
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
