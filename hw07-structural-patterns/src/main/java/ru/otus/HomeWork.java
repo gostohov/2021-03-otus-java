@@ -8,6 +8,7 @@ import ru.otus.model.ObjectForMessage;
 import ru.otus.processor.homework.EvenSecondProcessor;
 import ru.otus.processor.homework.SwapF11F12Processor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,7 @@ public class HomeWork {
          */
         var processors = List.of(
             new SwapF11F12Processor(),
-            new EvenSecondProcessor()
+            new EvenSecondProcessor(LocalDateTime::now)
         );
 
         var complexProcessor = new ComplexProcessor(processors, (ex) -> System.out.println(ex.getMessage()));

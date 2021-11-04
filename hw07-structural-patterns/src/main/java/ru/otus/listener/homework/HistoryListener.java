@@ -7,46 +7,23 @@ import java.util.*;
 
 public class HistoryListener implements Listener, HistoryReader {
 
-    private final List<List<Message>> history;
-    private final Set<Message> storage;
-
-    public HistoryListener() {
-        history = new ArrayList<>();
-        storage = new HashSet<>();
-    }
+    private final Map<Long, Message> history = new HashMap<>();
 
     @Override
     public void onUpdated(Message msg) {
-        if (msg != null) {
-            List<Message> changes = new ArrayList<>();
-            Optional<Message> oldMsg = findMessageById(msg.getId());
-            oldMsg.ifPresentOrElse(
-                oldMessage -> {
-                    storage.remove(msg);
-                    changes.add((Message) oldMessage.clone());
-                    changes.add((Message) msg.clone());
-                    history.add(changes);
-                },
-                () -> {
-
-                }
-            );
-
-            storage.add((Message) msg.clone());
-        }
+        var copy = msg.clone();
+        history.put(msg.getId(), copy);
     }
 
     @Override
     public Optional<Message> findMessageById(long id) {
-        return storage.stream()
-                      .filter(message -> message.getId() == id)
-                      .findFirst();
+        return Optional.of(history.get(id));
     }
 
     public void printHistory() {
-        history.forEach(changes -> {
-            var logString = String.format("oldMsg:%s,\nnewMsg:%s\n", changes.get(0), changes.get(1));
-            System.out.println(logString);
+        history.forEach((k, v) -> {
+            System.out.println(v);
         });
     }
+
 }

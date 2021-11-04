@@ -112,8 +112,8 @@ public class Message {
      * чтобы избежать его неконтролируемых изменений.
      */
     @Override
-    public Object clone() {
-        return toBuilder().field13((ObjectForMessage) field13.clone()).build();
+    public Message clone() {
+        return toBuilder().field13(field13.clone()).build();
     }
 
     public Builder toBuilder() {

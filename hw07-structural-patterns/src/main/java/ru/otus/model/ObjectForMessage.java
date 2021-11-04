@@ -15,7 +15,7 @@ public class ObjectForMessage {
     }
 
     @Override
-    protected Object clone() {
+    protected ObjectForMessage clone() {
         ObjectForMessage newOFM = new ObjectForMessage();
         newOFM.setData(new ArrayList<>(data));
         return newOFM;
