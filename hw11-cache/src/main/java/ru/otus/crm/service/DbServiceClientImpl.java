@@ -33,7 +33,10 @@ public class DbServiceClientImpl implements DBServiceClient {
             if (client.getId() == null) {
                 clientDataTemplate.insert(session, client);
                 log.info("created client: {}", client);
-
+                if (cache != null) {
+                    cache.put(buildKey(client.getId()), client);
+                    log.info("client cached: {}", cache.toString());
+                }
                 return client;
             }
             clientDataTemplate.update(session, client);
@@ -44,9 +47,21 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     @Override
     public Optional<Client> getClient(long id) {
+        if (cache != null) {
+            Client client = cache.get(buildKey(id));
+            if (client != null) {
+                return Optional.of(client);
+            }
+        }
         try (var session = sessionFactory.openSession()) {
             try {
-                return Optional.ofNullable(session.find(Client.class, id));
+                Optional<Client> clientOptional = Optional.ofNullable(session.find(Client.class, id));
+                log.info("client: {}", clientOptional.orElse(null));
+                clientOptional.ifPresent(cl -> {
+                    assert cache != null;
+                    cache.put(buildKey(cl.getId()), cl);
+                });
+                return clientOptional;
             } catch (Exception ex) {
                 log.error(ex.getMessage(), ex);
             }
@@ -61,5 +76,9 @@ public class DbServiceClientImpl implements DBServiceClient {
             log.info("clientList:{}", clientList);
             return clientList;
        });
+    }
+
+    private String buildKey(long id) {
+        return String.valueOf(id);
     }
 }
