@@ -1,13 +1,12 @@
 package ru.otus.crm.service;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.cachehw.HwCache;
 import ru.otus.core.repository.DataTemplate;
-import ru.otus.crm.model.Client;
 import ru.otus.core.sessionmanager.TransactionManager;
+import ru.otus.crm.model.Client;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,14 +28,15 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     @Override
     public Client saveClient(Client client) {
+        if (cache != null) {
+            cache.put(buildKey(client.getId()), client);
+            log.info("client cached: {}", cache.toString());
+        }
+
         return transactionManager.doInTransaction(session -> {
             if (client.getId() == null) {
                 clientDataTemplate.insert(session, client);
                 log.info("created client: {}", client);
-                if (cache != null) {
-                    cache.put(buildKey(client.getId()), client);
-                    log.info("client cached: {}", cache.toString());
-                }
                 return client;
             }
             clientDataTemplate.update(session, client);
@@ -53,20 +53,23 @@ public class DbServiceClientImpl implements DBServiceClient {
                 return Optional.of(client);
             }
         }
+
+        Client client = new Client();
         try (var session = sessionFactory.openSession()) {
             try {
-                Optional<Client> clientOptional = Optional.ofNullable(session.find(Client.class, id));
-                log.info("client: {}", clientOptional.orElse(null));
-                clientOptional.ifPresent(cl -> {
-                    assert cache != null;
-                    cache.put(buildKey(cl.getId()), cl);
-                });
-                return clientOptional;
+                client = session.find(Client.class, id);
             } catch (Exception ex) {
                 log.error(ex.getMessage(), ex);
             }
         }
-        return Optional.empty();
+
+        Optional<Client> clientOptional = Optional.ofNullable(client);
+        log.info("client: {}", clientOptional.orElse(null));
+        clientOptional.ifPresent(cl -> {
+            assert cache != null;
+            cache.put(buildKey(cl.getId()), cl);
+        });
+        return clientOptional;
     }
 
     @Override
