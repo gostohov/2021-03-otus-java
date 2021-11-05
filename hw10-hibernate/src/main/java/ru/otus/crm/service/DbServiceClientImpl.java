@@ -16,12 +16,10 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     private final DataTemplate<Client> clientDataTemplate;
     private final TransactionManager transactionManager;
-    private final SessionFactory sessionFactory;
 
-    public DbServiceClientImpl(TransactionManager transactionManager, DataTemplate<Client> clientDataTemplate, SessionFactory sessionFactory) {
+    public DbServiceClientImpl(TransactionManager transactionManager, DataTemplate<Client> clientDataTemplate) {
         this.transactionManager = transactionManager;
         this.clientDataTemplate = clientDataTemplate;
-        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -41,19 +39,16 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     @Override
     public Optional<Client> getClient(long id) {
-        try (var session = sessionFactory.openSession()) {
-            try {
-                return Optional.ofNullable(session.find(Client.class, id));
-            } catch (Exception ex) {
-                log.error(ex.getMessage(), ex);
-            }
-        }
-        return Optional.empty();
+        return transactionManager.doSelect(session -> {
+            var clientOptional = clientDataTemplate.findById(session, id);
+            log.info("client: {}", clientOptional);
+            return clientOptional;
+        });
     }
 
     @Override
     public List<Client> findAll() {
-        return transactionManager.doInTransaction(session -> {
+        return transactionManager.doSelect(session -> {
             var clientList = clientDataTemplate.findAll(session);
             log.info("clientList:{}", clientList);
             return clientList;

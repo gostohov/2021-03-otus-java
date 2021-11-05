@@ -36,7 +36,7 @@ public class DbServiceDemo {
 ///
         var clientTemplate = new DataTemplateHibernate<>(Client.class);
 ///
-        var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate, sessionFactory);
+        var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
 
 // Первый клиент
         var firstClient = new Client();
