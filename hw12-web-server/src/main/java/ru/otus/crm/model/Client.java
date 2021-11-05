@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "client")
-public class Client implements Cloneable {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -15,6 +15,15 @@ public class Client implements Cloneable {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "username", unique = true)
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "administrator")
+    private boolean isAdmin;
 
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private AddressDataSet address;
@@ -25,19 +34,14 @@ public class Client implements Cloneable {
     public Client() {
     }
 
-    public Client(String name) {
-        this.id = null;
-        this.name = name;
-    }
-
-    public Client(Long id, String name) {
+    public Client(Long id, String name, String username, String password, AddressDataSet address, List<PhoneDataSet> phones, boolean isAdmin) {
         this.id = id;
         this.name = name;
-    }
-
-    @Override
-    public Client clone() {
-        return new Client(this.id, this.name);
+        this.username = username;
+        this.password = password;
+        this.address = address;
+        this.phones = phones;
+        this.isAdmin = isAdmin;
     }
 
     public Long getId() {
@@ -56,6 +60,22 @@ public class Client implements Cloneable {
         this.name = name;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public AddressDataSet getAddress() {
         return address;
     }
@@ -72,11 +92,19 @@ public class Client implements Cloneable {
         this.phones = phones;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", address=" + address +
+                ", phones=" + phones +
                 '}';
     }
 }

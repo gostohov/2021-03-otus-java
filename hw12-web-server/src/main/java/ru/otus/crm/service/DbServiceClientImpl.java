@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.core.repository.DataTemplate;
+import ru.otus.core.repository.Field;
 import ru.otus.crm.model.Client;
 import ru.otus.core.sessionmanager.TransactionManager;
 
@@ -41,6 +42,15 @@ public class DbServiceClientImpl implements DBServiceClient {
     public Optional<Client> getClient(long id) {
         return transactionManager.doSelect(session -> {
             var clientOptional = clientDataTemplate.findById(session, id);
+            log.info("client: {}", clientOptional);
+            return clientOptional;
+        });
+    }
+
+    @Override
+    public Optional<Client> getClientByUsername(String username) {
+        return transactionManager.doSelect(session -> {
+            var clientOptional = clientDataTemplate.findByField(session, new Field<String>("username", username));
             log.info("client: {}", clientOptional);
             return clientOptional;
         });

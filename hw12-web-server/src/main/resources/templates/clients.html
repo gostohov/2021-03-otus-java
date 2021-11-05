@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Clients</title>
+    <style>
+        table,
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .row_container {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 8px;
+        }
+        .disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<!--        Id пользователя <input type="text" id = "userIdTextBox" placeholder="Id пользователя"><Br><Br>-->
+<!--        Имя пользователя <input type="text" id = "userNameTextBox" placeholder="Имя пользователя"><Br><Br>-->
+<!--        Логин пользователя <input type="text" id = "userLoginTextBox" placeholder="Логин пользователя"><Br><Br>-->
+<!--        Пароль пользователя <input type="text" id = "userPasswordTextBox" placeholder="Пароль пользователя"><Br><Br>-->
+<!--        <input type="checkbox" id="isAdminCheckBox"> Права администратора<Br><Br>-->
+<!--        <Br><Br>-->
+<!--        <button onclick="getUserById()">Получить пользователя по id</button><Br><Br>-->
+<!--        <button onclick="getAllUsers()">Получить список пользователей</button><Br><Br>-->
+<!--        <button onclick="saveUser()">Создать пользователя</button><Br><Br>-->
+
+<!--        <pre id="userDataContainer"></pre>-->
+<div class="row_container">
+    <label for="find-by-id">Получить клиента по id:</label>
+    <input id="find-by-id" class="user-id_input" type="text"/>
+    <button onclick="renderClientById()">Получить</button>
+</div>
+<br>
+<div class="row_container">
+    <button onclick="renderAllClients()">Все клиенты</button>
+    <button class="add-new-table-row" onclick="generateCreationRow()">Добавить новую запись</button>
+    <button class="save-new-client" onclick="saveNewClient()">Создать</button>
+</div>
+<br>
+<table style="width: 400px">
+    <thead>
+    <tr>
+        <td style="width: 50px">Id</td>
+        <td style="width: 150px">Имя</td>
+        <td style="width: 100px">Логин</td>
+        <td style="width: 100px">Пароль</td>
+        <td style="width: 100px">Админ</td>
+    </tr>
+    </thead>
+    <tbody class="table-body"></tbody>
+</table>
+
+<script>
+    renderAllClients();
+
+    async function renderAllClients() {
+        const list = await getAllClients();
+        fillTable(list);
+    }
+
+    async function renderClientById() {
+        const client = await getClientById();
+        fillTable([client]);
+    }
+
+    function fillTable(list) {
+        const elements = getElements();
+        elements.tableBody().innerHTML = '';
+
+        const getTableRow = (data) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td>' + data.id + '</td>' + '\n' +
+                '<td>' + data.name + '</td>' + '\n' +
+                '<td>' + data.username + '</td>' + '\n' +
+                '<td>' + data.password + '</td>' + '\n' +
+                '<td>' + data.isAdmin + '</td>';
+            return tr;
+        };
+
+        list.forEach(client => {
+            const tableRow = getTableRow(client);
+            elements.tableBody().appendChild(tableRow);
+        });
+
+        elements.addNewClientButton().classList.remove('disabled');
+    }
+
+    function generateCreationRow() {
+        const elements = getElements();
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td></td>' +
+                        '<td><input class="new-client-name" type="text"/></td>' +
+                        '<td><input class="new-client-username" type="text"/></td>' +
+                        '<td><input class="new-client-password" type="text"/></td>' +
+                        '<td><input class="new-client-isAdmin" type="checkbox"/></td>';
+        elements.tableBody().appendChild(tr);
+        elements.addNewClientButton().classList.add('disabled');
+    }
+
+    function saveNewClient() {
+        const { name, username, password, isAdmin } = getElements().newClient;
+        const data = {
+            name: name().value,
+            username: username().value,
+            password: password().value,
+            isAdmin: isAdmin().checked,
+        }
+        fetch('api/client', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(() => renderAllClients())
+    }
+
+    async function getAllClients() {
+        const response = await fetch('api/client/');
+        return response.json();
+    }
+
+    async function getClientById() {
+        const id = getElements().userIdInput().value;
+        const response = await fetch('api/client/' + id);
+        return response.json();
+    }
+
+    function getElements() {
+        return {
+            tableBody: () => document.querySelector('.table-body'),
+            userIdInput: () => document.querySelector('.user-id_input'),
+            addNewClientButton: () => document.querySelector('.add-new-table-row'),
+            newClient: {
+                name: () => document.querySelector('.new-client-name'),
+                username: () => document.querySelector('.new-client-username'),
+                password: () => document.querySelector('.new-client-password'),
+                isAdmin: () => document.querySelector('.new-client-isAdmin')
+            }
+        };
+    }
+</script>
+</body>
+</html>
