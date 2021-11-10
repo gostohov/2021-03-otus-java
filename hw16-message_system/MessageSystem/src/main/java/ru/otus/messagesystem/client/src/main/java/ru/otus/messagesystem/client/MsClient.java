@@ -1,7 +1,7 @@
-package ru.otus.messagesystem.client;
+package ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.client;
 
-import ru.otus.messagesystem.message.Message;
-import ru.otus.messagesystem.message.MessageType;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.message.Message;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.message.MessageType;
 
 public interface MsClient {
 

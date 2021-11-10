@@ -1,13 +1,13 @@
-package ru.otus.messagesystem.client;
+package ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.messagesystem.HandlersStore;
-import ru.otus.messagesystem.message.Message;
-import ru.otus.messagesystem.message.MessageBuilder;
-import ru.otus.messagesystem.MessageSystem;
-import ru.otus.messagesystem.message.MessageType;
-import ru.otus.messagesystem.RequestHandler;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.HandlersStore;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.MessageSystem;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.RequestHandler;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.message.Message;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.message.MessageBuilder;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.message.MessageType;
 
 import java.util.Objects;
 

@@ -1,10 +1,9 @@
-package ru.otus.messagesystem.message;
+package ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.message;
 
 public enum MessageType {
     USER_DATA("UserData"),
     ALL_CLIENTS("AllClients"),
-    SAVE_CLIENT("SaveClient"),
-    CLIENT_BY_ID("ClientById");
+    SAVE_CLIENT("SaveClient");
 
     private final String name;
 

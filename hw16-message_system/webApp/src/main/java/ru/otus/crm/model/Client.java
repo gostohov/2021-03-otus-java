@@ -4,9 +4,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.lang.NonNull;
+import ru.otus.messagesystem.client.ResultDataType;
 
 @Table("client")
-public class Client {
+public class Client extends ResultDataType {
 
     @Id
     private Long id;

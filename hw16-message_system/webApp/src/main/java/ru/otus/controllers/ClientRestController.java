@@ -17,7 +17,7 @@ public class ClientRestController {
 
     @GetMapping("/api/client/{id}")
     public Client getClientById(@PathVariable(name = "id") long id) {
-        return dbServiceClient.getClient(id).orElse(new Client());
+        return dbServiceClient.getClientById(id).orElse(new Client());
     }
 
     @GetMapping("/api/client/list")

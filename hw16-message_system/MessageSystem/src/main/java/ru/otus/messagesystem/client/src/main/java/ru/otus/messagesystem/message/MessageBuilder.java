@@ -1,7 +1,7 @@
-package ru.otus.messagesystem.message;
+package ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.message;
 
-import ru.otus.messagesystem.client.CallbackId;
-import ru.otus.messagesystem.client.ResultDataType;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.client.CallbackId;
+import ru.otus.messagesystem.client.src.main.java.ru.otus.messagesystem.client.ResultDataType;
 
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class MessageBuilder {
     }
 
     public static <T extends ResultDataType> Message buildMessage(String from, String to, MessageId sourceMessageId,
-                                                                     T data, MessageType msgType) {
+                                                                  T data, MessageType msgType) {
         return buildMessage(from, to, sourceMessageId, data, msgType, null);
     }
 
@@ -28,7 +28,7 @@ public class MessageBuilder {
     }
 
     private static <T extends ResultDataType> Message buildMessage(String from, String to, MessageId sourceMessageId,
-                                                                     T data, MessageType msgType, CallbackId callbackId) {
+                                                                   T data, MessageType msgType, CallbackId callbackId) {
         String id = UUID.randomUUID().toString();
         return new Message(new MessageId(id), from, to, sourceMessageId, msgType.getName(),
                 Serializers.serialize(data), callbackId == null ? new CallbackId(id) : callbackId);

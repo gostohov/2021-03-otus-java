@@ -6,6 +6,8 @@ sourceCompatibility = JavaVersion.VERSION_15
 targetCompatibility = JavaVersion.VERSION_15
 
 dependencies {
+    implementation project(":hw16-message_system:MessageSystem")
+
     implementation 'ch.qos.logback:logback-classic'
     implementation 'org.hibernate:hibernate-core'
     implementation 'org.flywaydb:flyway-core'
@@ -13,6 +15,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
 
     implementation("org.javassist:javassist:3.24.0-GA")
 
@@ -20,7 +23,15 @@ dependencies {
     implementation("org.springframework:spring-webmvc")
     implementation("org.thymeleaf:thymeleaf-spring5")
     implementation("javax.servlet:javax.servlet-api")
+    implementation("org.webjars:sockjs-client:${Versions.sockjs}")
+    implementation("org.webjars:stomp-websocket:${Versions.stomp}")
 }
 
 test {
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

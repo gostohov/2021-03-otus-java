@@ -34,7 +34,7 @@ public class DbServiceClientImpl implements DBServiceClient {
     }
 
     @Override
-    public Optional<Client> getClient(long id) {
+    public Optional<Client> getClientById(long id) {
         var clientOptional = clientRepository.findById(id);
         log.info("client: {}", clientOptional);
         return clientOptional;

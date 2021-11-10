@@ -9,7 +9,7 @@ public interface DBServiceClient {
 
     Client saveClient(Client client);
 
-    Optional<Client> getClient(long id);
+    Optional<Client> getClientById(long id);
 
     List<Client> findAll();
 }
